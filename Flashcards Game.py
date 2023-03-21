@@ -25,7 +25,7 @@ def new_card():
 def save_card():
     with open('flashcards.json', 'w') as f:
         json.dump(cards, f)
-        #revoir ces commandes
+
         
 #delete a card
 def delete_card():
