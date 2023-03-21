@@ -7,15 +7,8 @@ try:
     with open('flashcards.json', 'r') as f:
         cards = json.load(f)
 except FileNotFoundError:
-    cards = {"Hello" : "Bonjour", "Thanks" : "Merci" }
+    cards = {"Hello" : "Bonjour", "Thanks" : "Merci"}
 
-
-# Prompt the user to enter a question and answer for the flashcard
-
-#print("Welcome to the Flascards game!")
-#print("Do you want to enter a new flashcard (1) or play with your cards (2)? (tap q to quit)")
-
-#trouver comment inserer un fichier txt dans lequel ajouter les flashcards
 
 #ajouter une carte
 def new_card():
@@ -46,9 +39,9 @@ def delete_card():
             print("Card is deleted.")
         else:
             print("Card not found.")
-#normally this loops until the user tap "r"
 
-#display cards?
+
+#display cards
 def display_cards():
     while True:
         all_cards = list(cards.items())
@@ -77,7 +70,7 @@ def modify_card(): #fonctionne
                     if verso == "q":
                         return select_card
                     else:
-                        cards[select_card] = verso #fonctionne
+                        cards[select_card] = verso 
                         save_card()
                         return modify_card()
                 elif change_card == "b":
@@ -135,8 +128,8 @@ def main_menu():
         if welcome == "m":
             return card_menu()
         else:
-            print("See you soon!")
-            break
+            return print("See you soon!")
+    
 
         
 
