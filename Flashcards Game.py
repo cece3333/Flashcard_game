@@ -1,9 +1,13 @@
 #flascards game
 
+import json
 import random
 
-
-cards = {"Hello" : "Bonjour", "Thanks" : "Merci" }
+try:
+    with open('flashcards.json', 'r') as f:
+        cards = json.load(f)
+except FileNotFoundError:
+    cards = {"Hello" : "Bonjour", "Thanks" : "Merci" }
 
 
 # Prompt the user to enter a question and answer for the flashcard
@@ -22,7 +26,13 @@ def new_card():
         if question != 'q':
             answer = input("Enter the verso of your card : ")
             cards[question] = answer
+            save_card()
             print("New card added")
+
+def save_card():
+    with open('flashcards.json', 'w') as f:
+        json.dump(cards, f)
+        #revoir ces commandes
         
 #delete a card
 def delete_card():
@@ -32,6 +42,7 @@ def delete_card():
             return card_menu()
         if key_to_delete in cards.keys():
             del cards[key_to_delete]
+            save_card()
             print("Card is deleted.")
         else:
             print("Card not found.")
@@ -44,7 +55,7 @@ def display_cards():
         print("Here are all your cards : " + str(all_cards)) #add the str bc we can concatenate lst 
         return card_menu()
 
-def modify_card():
+def modify_card(): #fonctionne
     while True:
             select_card = input("Please enter the recto of the card you want to modify (or r to return) : ")
             if select_card == "r":
@@ -58,7 +69,8 @@ def modify_card():
                     if recto == "q":
                         return select_card
                     else: 
-                        select_card = recto #doesn't work
+                        cards[recto] = cards.pop(select_card)
+                        save_card()
                         return modify_card()
                 elif change_card == "v":
                     verso = input("Enter the new verso of your card (or q to quit) : ")
@@ -66,6 +78,7 @@ def modify_card():
                         return select_card
                     else:
                         cards[select_card] = verso #fonctionne
+                        save_card()
                         return modify_card()
                 elif change_card == "b":
                     recto1 = input("Enter the new recto of your card : ")
@@ -73,7 +86,9 @@ def modify_card():
                     if verso1 == "q":
                         return select_card
                     else:
+                        cards[recto1] = cards.pop(select_card)
                         cards[recto1] = verso1
+                        save_card()
                         return modify_card()
                     
 def play_cards(): #semble fonctionner. Attention à ne pas avoir "cards" vide.
